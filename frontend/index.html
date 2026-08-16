@@ -7,49 +7,97 @@
     <link rel="stylesheet" href="static/css/style.css">
     <script src="static/js/app.js"></script>
     <style>
-        /* Modern, responsive design styles go here */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f7;
+        }
+        header, footer {
+            background-color: #1976d2;
+            color: #ffffff;
+            padding: 10px 20px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #2c3e50;
+        }
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .hero {
+            background-image: linear-gradient(135deg, #1976d2 0%, #2c3e50 100%);
+            color: #ffffff;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .login-register-btn {
+            display: inline-block;
+            margin: 20px 10px;
+            padding: 10px 20px;
+            background-color: #00b8d4;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-register-btn:hover {
+            background-color: #0096c7;
+        }
+        .dashboard-preview {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            background-color: #1976d2;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <div class="navbar-brand">
-                <a href="#">Online Shopping Management System</a>
+        <div class="navbar">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <div class="login">
+                <a href="#">Login</a>
+                <a href="#">Register</a>
             </div>
-            <ul class="navbar-items">
-                <li><a href="#products">Products</a></li>
-                <li><a href="#orders">Orders</a></li>
-                <li><a href="#customers">Customers</a></li>
-                <li><a href="#payments">Payments</a></li>
-                <li><a href="#user-profiles">User Profiles</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero-section">
-            <h1>Welcome to the Online Shopping Management System</h1>
-            <p>Efficiently manage your online store operations.</p>
-            <button class="login-button">Login</button>
-            <button class="register-button">Register</button>
-        </section>
-
-        <section id="dashboard-preview">
-            <h2>Dashboard Preview</h2>
-            <p>View your orders, customers, and product listings here.</p>
-            <p>Click on the navigation links to explore different sections.</p>
-            <img src="static/images/dashboard-preview.png" alt="Dashboard Preview">
-        </section>
-
-        <section id="footer">
-            <p>&copy; 2023 Online Shopping Management System. All rights reserved.</p>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>Footer Content</p>
         </div>
+    </header>
+    <section class="hero">
+        <h1>Welcome to Online Shopping Management System</h1>
+        <p>Streamline your online shopping processes with our efficient system.</p>
+    </section>
+    <section class="login-register-btn-container">
+        <button class="login-register-btn" onclick="window.location.href='/login'">Login</button>
+        <button class="login-register-btn" onclick="window.location.href='/register'">Register</button>
+    </section>
+    <section class="dashboard-preview">
+        <h2>Dashboard Preview</h2>
+        <p>See your orders, manage accounts, and more.</p>
+    </section>
+    <footer class="footer">
+        <p>© 2023 Online Shopping Management System. All rights reserved.</p>
     </footer>
 </body>
 </html>

@@ -8,7 +8,6 @@ Frontend Technology:
 - HTML5
 - CSS3
 - JavaScript
-- Flask Templates
 
 Application Pages:
 - Login Page
@@ -16,6 +15,7 @@ Application Pages:
 - Dashboard
 - Project Generation Page
 - Project History Page
+- Settings Page
 
 UI Components:
 - Navigation Bar
@@ -33,6 +33,7 @@ templates/
 - register.html
 - dashboard.html
 - project_input.html
+- generate_project.html
 - project_history.html
 
 static/
@@ -41,14 +42,14 @@ static/
 - images/
 
 User Flow:
-- User Registration
-- User Login
-- Dashboard
-- Enter Project Prompt
-- Generate Project
-- View AI Outputs
-- Download Project
-- Logout
+1. User Registration
+2. User Login
+3. Dashboard
+4. Enter Project Prompt
+5. Generate Project
+6. View AI Outputs
+7. Download Project
+8. Logout
 
 Frontend Features:
 - Responsive Design
@@ -57,9 +58,6 @@ Frontend Features:
 - Progress Bar
 - Error Messages
 - Success Notifications
-
-Expected Outcome:
-Provide a clean, responsive, and user-friendly web interface for the AI Software Development Team platform.
 
 ## Backend Design
 
@@ -118,111 +116,54 @@ Error Handling:
 - Database Error
 - AI Service Error
 
-Expected Outcome:
-Develop a secure, scalable, and maintainable Flask backend.
-
 ## Database Design
 
 Database Name:
-OnlineShoppingDB
+OnlineShoppingManagementDB
 
 Database Type:
 - PostgreSQL
 
 Main Tables:
-- Products
-- Orders
-- Customers
-- Payments
-- UserProfiles
+- ProductCatalog
+- UserManagement
+- OrderManagement
+- CustomerSupport
+- Analytics
 
 Table Details:
 
-Table Name: Products
+Table Name: ProductCatalog
 
 Columns:
-- ProductID : SERIAL PRIMARY KEY
+- ProductID : INT
 - ProductName : VARCHAR(255)
 - Description : TEXT
 - Price : DECIMAL
-- Quantity : INTEGER
-- Category : VARCHAR(50)
+- CategoryID : INT
+- CategoryName : VARCHAR(100)
 - ImageURL : VARCHAR(255)
-- UserID : INTEGER REFERENCES UserProfiles(UserID)
-
-Table Name: Orders
-
-Columns:
-- OrderID : SERIAL PRIMARY KEY
-- CustomerID : INTEGER REFERENCES Customers(CustomerID)
-- OrderDate : DATE
-- TotalPrice : DECIMAL
-- Status : VARCHAR(50)
-- UserID : INTEGER REFERENCES UserProfiles(UserID)
-
-Table Name: Customers
-
-Columns:
-- CustomerID : SERIAL PRIMARY KEY
-- FirstName : VARCHAR(50)
-- LastName : VARCHAR(50)
-- Email : VARCHAR(100)
-- Phone : VARCHAR(20)
-- Address : TEXT
-- UserID : INTEGER REFERENCES UserProfiles(UserID)
-
-Table Name: Payments
-
-Columns:
-- PaymentID : SERIAL PRIMARY KEY
-- OrderID : INTEGER REFERENCES Orders(OrderID)
-- PaymentMethod : VARCHAR(50)
-- Amount : DECIMAL
-- TransactionID : VARCHAR(100)
-- UserID : INTEGER REFERENCES UserProfiles(UserID)
-
-Table Name: UserProfiles
-
-Columns:
-- UserID : SERIAL PRIMARY KEY
-- UserName : VARCHAR(50) UNIQUE
-- Password : VARCHAR(100) ENCRYPTED
-- Email : VARCHAR(100) UNIQUE
-- Role : ENUM('Retailer', 'Customer', 'Admin') DEFAULT 'Customer'
-- CompanyName : VARCHAR(100)
-- ContactNumber : VARCHAR(20)
-- Address : TEXT
-- ProfilePicture : VARCHAR(255)
-- AuthToken : VARCHAR(100)
+- CreatedAt : TIMESTAMP
+- UpdatedAt : TIMESTAMP
 
 Primary Key:
-- Products(ProductID)
-- Orders(OrderID)
-- Customers(CustomerID)
-- Payments(PaymentID)
-- UserProfiles(UserID)
+- ProductID
 
 Foreign Keys:
-- Orders.CustomerID REFERENCES Customers(CustomerID)
-- Orders.UserID REFERENCES UserProfiles(UserID)
-- Customers.UserID REFERENCES UserProfiles(UserID)
-- Payments.OrderID REFERENCES Orders(OrderID)
-- Payments.UserID REFERENCES UserProfiles(UserID)
+- CategoryID
 
 Relationships:
-- Products are associated with Users through the UserProfiles table
-- Orders are associated with Customers and Products through the Users table
-- Payments are associated with Orders through the Users table
+- One-to-Many relationship with Category table
 
 Indexes:
-- No specific indexes are required for this design
+- ProductID
+- CategoryID
+- CreatedAt
 
 Constraints:
-- UserID in all tables are NOT NULL
-- Email in UserProfiles are UNIQUE
-- Password in UserProfiles are ENCRYPTED
-- Role in UserProfiles is a CHECK constraint for valid roles
-- AuthToken in UserProfiles is UNIQUE
+- ProductID: NOT NULL
+- CategoryID: NOT NULL
+- CreatedAt: NOT NULL
 
 Normalization:
 - First Normal Form (1NF)
@@ -230,10 +171,10 @@ Normalization:
 - Third Normal Form (3NF)
 
 Security Considerations:
-- Passwords are ENCRYPTED in UserProfiles
-- User Profiles have ROLE and AUTHToken for Role-Based Access Control
-- Emails in UserProfiles are UNIQUE
-- SQL Injections are prevented by using Prepared Statements in the backend
-- Regular backups are performed to ensure data integrity and availability
-- Users are authenticated through OAuth for external login providers
-- JWT tokens are used for secure API calls to ensure secure data transmission
+- Data Encryption: Sensitive data like passwords should be encrypted using a secure algorithm.
+- User Authentication: JWT for securing API requests and managing session tokens.
+- Role-Based Access Control: Define roles for different users (retailers, customers, support staff) and assign permissions accordingly.
+- Backup Strategy: Schedule regular backups and use a robust database replication strategy to ensure data integrity and availability.
+
+Expected Outcome:
+Provide a secure, scalable, and normalized PostgreSQL database design suitable for the project.
