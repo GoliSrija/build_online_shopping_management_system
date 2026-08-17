@@ -15,7 +15,6 @@ Application Pages:
 - Dashboard
 - Project Generation Page
 - Project History Page
-- Settings Page
 
 UI Components:
 - Navigation Bar
@@ -42,14 +41,14 @@ static/
 - images/
 
 User Flow:
-1. User Registration
-2. User Login
-3. Dashboard
-4. Enter Project Prompt
-5. Generate Project
-6. View AI Outputs
-7. Download Project
-8. Logout
+- User Registration
+- User Login
+- Dashboard
+- Enter Project Prompt
+- Generate Project
+- View AI Outputs
+- Download Project
+- Logout
 
 Frontend Features:
 - Responsive Design
@@ -116,54 +115,52 @@ Error Handling:
 - Database Error
 - AI Service Error
 
+Expected Outcome:
+Develop a secure, scalable, and maintainable Flask backend.
+
 ## Database Design
 
 Database Name:
-OnlineShoppingManagementDB
+OnlineShoppingDB
 
 Database Type:
 - PostgreSQL
 
 Main Tables:
-- ProductCatalog
-- UserManagement
-- OrderManagement
-- CustomerSupport
+- Products
+- Orders
+- Customers
 - Analytics
+- Admins
 
 Table Details:
 
-Table Name: ProductCatalog
+Table Name: Products
 
 Columns:
-- ProductID : INT
+- ProductID : SERIAL
 - ProductName : VARCHAR(255)
 - Description : TEXT
 - Price : DECIMAL
-- CategoryID : INT
-- CategoryName : VARCHAR(100)
+- Stock : INTEGER
+- Category : VARCHAR(100)
 - ImageURL : VARCHAR(255)
-- CreatedAt : TIMESTAMP
-- UpdatedAt : TIMESTAMP
 
 Primary Key:
 - ProductID
 
 Foreign Keys:
-- CategoryID
+- None
 
 Relationships:
-- One-to-Many relationship with Category table
+- None
 
 Indexes:
 - ProductID
-- CategoryID
-- CreatedAt
 
 Constraints:
-- ProductID: NOT NULL
-- CategoryID: NOT NULL
-- CreatedAt: NOT NULL
+- NOT NULL
+- UNIQUE (ProductName)
 
 Normalization:
 - First Normal Form (1NF)
@@ -171,10 +168,7 @@ Normalization:
 - Third Normal Form (3NF)
 
 Security Considerations:
-- Data Encryption: Sensitive data like passwords should be encrypted using a secure algorithm.
-- User Authentication: JWT for securing API requests and managing session tokens.
-- Role-Based Access Control: Define roles for different users (retailers, customers, support staff) and assign permissions accordingly.
-- Backup Strategy: Schedule regular backups and use a robust database replication strategy to ensure data integrity and availability.
-
-Expected Outcome:
-Provide a secure, scalable, and normalized PostgreSQL database design suitable for the project.
+- Data Encryption
+- User Authentication
+- Role-Based Access Control
+- Backup Strategy

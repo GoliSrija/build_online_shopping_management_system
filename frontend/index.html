@@ -8,96 +8,128 @@
     <script src="static/js/app.js"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto Regular', sans-serif;
+            background-color: #F6F6F6;
+            color: #212529;
             margin: 0;
             padding: 0;
-            background-color: #f4f6f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         header, footer {
-            background-color: #1976d2;
-            color: #ffffff;
-            padding: 10px 20px;
+            background-color: #343A40;
+            color: #F6F6F6;
+            padding: 10px;
         }
-        .navbar {
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+            background-color: #007BFF;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
-            background-color: #2c3e50;
         }
-        .navbar a {
-            color: #ffffff;
+        nav a {
+            color: #F6F6F6;
             text-decoration: none;
+            margin: 0 10px;
         }
-        .navbar a:hover {
-            text-decoration: underline;
-        }
-        .hero {
-            background-image: linear-gradient(135deg, #1976d2 0%, #2c3e50 100%);
-            color: #ffffff;
-            padding: 100px 20px;
+        section.hero {
+            background-image: url('static/images/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #F6F6F6;
+            padding: 50px;
             text-align: center;
         }
-        .login-register-btn {
-            display: inline-block;
-            margin: 20px 10px;
-            padding: 10px 20px;
-            background-color: #00b8d4;
-            color: #ffffff;
+        section.dashboard {
+            background-color: #343A40;
+            color: #F6F6F6;
+            padding: 20px;
+        }
+        section.dashboard h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        section.dashboard button {
+            background-color: #0056b3;
+            color: #F6F6F6;
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px 0;
             cursor: pointer;
-            font-size: 16px;
         }
-        .login-register-btn:hover {
-            background-color: #0096c7;
+        section.dashboard button:hover {
+            background-color: #004882;
         }
-        .dashboard-preview {
-            background-color: #ffffff;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        section.dashboard table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .footer {
-            background-color: #1976d2;
-            color: #ffffff;
-            padding: 20px;
+        section.dashboard table th, section.dashboard table td {
+            border: 1px solid #343A40;
+            padding: 10px;
+        }
+        section.dashboard table th {
+            background-color: #007BFF;
+            color: #F6F6F6;
+        }
+        section.dashboard table tr:nth-child(even) {
+            background-color: #343A40;
+        }
+        section.dashboard table tr:hover {
+            background-color: #0056b3;
+        }
+        section.dashboard .loading-indicator {
+            display: none;
             text-align: center;
+            margin: 20px 0;
         }
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-            }
+        section.dashboard .loading-indicator img {
+            margin: 0 auto;
+        }
+        section.dashboard .loading-indicator p {
+            margin: 0;
+        }
+        footer {
+            padding: 10px;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="navbar">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <div class="login">
-                <a href="#">Login</a>
-                <a href="#">Register</a>
-            </div>
-        </div>
+        <h1>Online Shopping Management System</h1>
+        <nav>
+            <a href="#/">Home</a>
+            <a href="#/login">Login</a>
+            <a href="#/register">Register</a>
+            <a href="#/dashboard">Dashboard</a>
+            <a href="#/logout">Logout</a>
+        </nav>
     </header>
-    <section class="hero">
-        <h1>Welcome to Online Shopping Management System</h1>
-        <p>Streamline your online shopping processes with our efficient system.</p>
-    </section>
-    <section class="login-register-btn-container">
-        <button class="login-register-btn" onclick="window.location.href='/login'">Login</button>
-        <button class="login-register-btn" onclick="window.location.href='/register'">Register</button>
-    </section>
-    <section class="dashboard-preview">
-        <h2>Dashboard Preview</h2>
-        <p>See your orders, manage accounts, and more.</p>
-    </section>
-    <footer class="footer">
-        <p>© 2023 Online Shopping Management System. All rights reserved.</p>
+    <main>
+        <section class="hero" id="hero">
+            <h2>Welcome to our Online Shopping Management System</h2>
+            <p>Manage your e-commerce business with ease.</p>
+            <button id="loginBtn">Login</button>
+            <button id="registerBtn">Register</button>
+        </section>
+        <section class="dashboard" id="dashboard">
+            <h1>Dashboard</h1>
+            <button id="generateProjectBtn">Generate Project</button>
+            <div class="loading-indicator">
+                <img src="static/images/loading.gif" alt="Loading">
+                <p>Loading...</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Online Shopping Management System. All rights reserved.</p>
     </footer>
 </body>
 </html>

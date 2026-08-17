@@ -1,51 +1,64 @@
 // Global variables
-let products = [
-    { id: 1, name: "Product 1", price: 100, quantity: 10 },
-    { id: 2, name: "Product 2", price: 200, quantity: 5 }
-];
+let form = document.getElementById('shopping-form');
+let submitBtn = document.getElementById('submit-btn');
+let clearBtn = document.getElementById('clear-btn');
+let dashboard = document.getElementById('dashboard');
 
-function handleFormSubmit(event) {
-    event.preventDefault();
-    let productId = parseInt(document.getElementById("productId").value);
-    let quantity = parseInt(document.getElementById("quantity").value);
-    let product = products.find(p => p.id === productId);
-    if (product) {
-        if (quantity > 0 && quantity <= product.quantity) {
-            product.quantity -= quantity;
-            updateDashboard();
-            alert("Product quantity updated successfully.");
-        } else {
-            alert("Invalid quantity or insufficient stock.");
-        }
-    } else {
-        alert("Product not found.");
-    }
+// Function to handle form validation
+function validateForm() {
+  let isValid = true;
+  const formData = {
+    productName: document.getElementById('product-name').value,
+    productPrice: document.getElementById('product-price').value,
+    productQuantity: document.getElementById('product-quantity').value
+  };
+
+  if (!formData.productName || formData.productName.trim() === '') {
+    isValid = false;
+  }
+
+  if (!formData.productPrice || formData.productPrice.trim() === '') {
+    isValid = false;
+  }
+
+  if (!formData.productQuantity || formData.productQuantity.trim() === '') {
+    isValid = false;
+  }
+
+  if (isValid) {
+    updateDashboard(formData);
+  } else {
+    alert('Please fill all fields');
+  }
 }
 
-function updateDashboard() {
-    let dashboardHtml = "<table>";
-    dashboardHtml += "<tr><th>Product</th><th>Price</th><th>Quantity</th></tr>";
-    products.forEach(product => {
-        dashboardHtml += `<tr><td>${product.name}</td><td>${product.price}</td><td>${product.quantity}</td></tr>`;
-    });
-    dashboardHtml += "</table>";
-    document.getElementById("dashboard").innerHTML = dashboardHtml;
+// Function to handle button actions
+function handleButtonActions(e) {
+  e.preventDefault();
+  if (e.target.id === 'submit-btn') {
+    validateForm();
+  } else if (e.target.id === 'clear-btn') {
+    resetForm();
+  }
 }
 
-function handleQuantityChange(event) {
-    let productId = parseInt(event.target.dataset.productid);
-    let quantity = parseInt(event.target.value);
-    let product = products.find(p => p.id === productId);
-    if (product) {
-        product.quantity = quantity;
-        updateDashboard();
-    }
+// Function to update dashboard with form data
+function updateDashboard(formData) {
+  let dashboardItem = document.createElement('div');
+  dashboardItem.innerHTML = `
+    <p>Product Name: ${formData.productName}</p>
+    <p>Product Price: ${formData.productPrice}</p>
+    <p>Product Quantity: ${formData.productQuantity}</p>
+  `;
+  dashboard.appendChild(dashboardItem);
 }
 
-document.getElementById("productForm").addEventListener("submit", handleFormSubmit);
-document.getElementById("quantityInput").addEventListener("input", handleQuantityChange);
-
-let productIdInput = document.getElementById("productId");
-for (let product of products) {
-    productIdInput.innerHTML += `<option value="${product.id}">${product.name}</option>`;
+// Function to reset form
+function resetForm() {
+  form.reset();
 }
+
+// Event listeners
+form.addEventListener('submit', handleButtonActions);
+submitBtn.addEventListener('click', handleButtonActions);
+clearBtn.addEventListener('click', handleButtonActions);
