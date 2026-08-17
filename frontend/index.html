@@ -4,100 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Shopping Management System</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <script src="static/js/app.js"></script>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Open Sans Regular', sans-serif;
-        }
-        .navbar {
-            background-color: #4A82B7;
-            color: #FFFFFF;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar a {
-            color: #FFFFFF;
-            text-decoration: none;
-            margin: 0 1rem;
-        }
-        .hero-section {
-            background-image: url('hero-section.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: #FFFFFF;
-        }
-        .hero-section h1 {
-            font-size: 24px;
-        }
-        .hero-section p {
-            font-size: 16px;
-            margin-top: 1rem;
-        }
-        .login-register-buttons {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-        .login-register-buttons button {
-            padding: 0.5rem 1rem;
-            margin: 0 0.5rem;
-            font-size: 16px;
-        }
-        .dashboard-preview {
-            background-color: #FFFFFF;
-            padding: 2rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-        }
-        .footer {
-            background-color: #333333;
-            color: #FFFFFF;
-            padding: 1rem;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-            }
-            .navbar a {
-                margin: 0.5rem 0;
-            }
-            .hero-section {
-                height: 300px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <script src="static/js/app.js" defer></script>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </nav>
-    <section class="hero-section">
-        <h1>Welcome to the Online Shopping Management System</h1>
-        <p>Streamline your online shopping experience with our integrated platform.</p>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="hero">
+        <h1>Welcome to Online Shopping Management System</h1>
+        <p>Streamline your online shopping experience.</p>
+        <button id="loginButton">Login</button>
+        <button id="registerButton">Register</button>
     </section>
-    <div class="login-register-buttons">
-        <button id="login-btn">Login</button>
-        <button id="register-btn">Register</button>
-    </div>
-    <div class="dashboard-preview">
-        <h2>Dashboard Preview</h2>
-        <p>Here you can manage your orders and accounts.</p>
-    </div>
-    <footer class="footer">
+
+    <section id="dashboard-preview">
+        <div>
+            <h2>Dashboard Preview</h2>
+            <p>Here you can monitor your online store's performance.</p>
+        </div>
+    </section>
+
+    <section id="footer">
         <p>&copy; 2023 Online Shopping Management System. All rights reserved.</p>
-    </footer>
+    </section>
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', function() {
+            window.location.href = "login.html";
+        });
+
+        document.getElementById('registerButton').addEventListener('click', function() {
+            window.location.href = "register.html";
+        });
+    </script>
 </body>
 </html>

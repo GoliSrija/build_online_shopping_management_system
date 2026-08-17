@@ -1,80 +1,49 @@
-// Global Variables
-let form = document.querySelector('#shopping-form');
-let dashboard = document.querySelector('#dashboard');
-let cart = document.querySelector('#cart');
-let errorMessage = document.querySelector('#error-message');
+// HTML Elements
+const form = document.querySelector('form');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const quantityInput = document.getElementById('quantity');
+const dashboard = document.querySelector('#dashboard');
 
 // Form Validation
 form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  validateForm();
-});
+    event.preventDefault();
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const quantity = quantityInput.value.trim();
 
-function validateForm() {
-  let valid = true;
-  let inputs = form.querySelectorAll('input');
-  inputs.forEach(input => {
-    if (!input.value.trim()) {
-      input.style.border = '2px solid red';
-      valid = false;
-    } else {
-      input.style.border = '';
+    // Name validation
+    if (!name) {
+        alert('Name is required');
+        return;
     }
-  });
-  if (!valid) {
-    errorMessage.style.display = 'block';
-  } else {
-    errorMessage.style.display = 'none';
-    updateDashboard();
-  }
-}
 
-// Button Actions
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  validateForm();
-  updateCart();
-});
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Invalid email address');
+        return;
+    }
 
-function updateCart() {
-  let inputs = form.querySelectorAll('input[type="number"]');
-  inputs.forEach(input => {
-    let value = parseInt(input.value);
-    input.closest('.item').querySelector('span').textContent = value;
-  });
-}
+    // Quantity validation
+    if (!quantity) {
+        alert('Quantity is required');
+        return;
+    }
+    quantityInput.value = parseInt(quantity);
 
-// Dynamic Content Updates
-function updateDashboard() {
-  dashboard.innerHTML = '';
-  fetch('/api/dashboard').then(response => response.json()).then(data => {
-    data.forEach(item => {
-      dashboard.innerHTML += `
-        <div class="item">
-          <div>${item.name}</div>
-          <div>${item.quantity}</div>
-          <button class="decrease">-</button>
-          <button class="increase">+</button>
-        </div>
-      `;
-    });
-  });
-}
-
-// Error Handling
-form.addEventListener('invalid', function(event) {
-  event.preventDefault();
-  errorMessage.style.display = 'block';
+    // Success message
+    alert('Form submitted successfully!');
+    updateDashboard(name, email, quantity);
 });
 
 // Dashboard Interactions
-dashboard.addEventListener('click', function(event) {
-  if (event.target.classList.contains('increase')) {
-    event.target.closest('.item').querySelector('span').textContent = parseInt(event.target.closest('.item').querySelector('span').textContent) + 1;
-  } else if (event.target.classList.contains('decrease')) {
-    event.target.closest('.item').querySelector('span').textContent = parseInt(event.target.closest('.item').querySelector('span').textContent) - 1;
-  }
-});
-
-// Initial Dashboard Update
-updateDashboard();
+function updateDashboard(name, email, quantity) {
+    dashboard.innerHTML = `
+    <div>
+        <h2>Welcome, ${name}!</h2>
+        <p>Email: ${email}</p>
+        <p>Product Quantity: ${quantity}</p>
+    </div>
+    `;
+}
