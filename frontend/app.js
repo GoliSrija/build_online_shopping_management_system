@@ -1,64 +1,80 @@
-// Global variables
-let form = document.getElementById('shopping-form');
-let submitBtn = document.getElementById('submit-btn');
-let clearBtn = document.getElementById('clear-btn');
-let dashboard = document.getElementById('dashboard');
+// Global Variables
+let form = document.querySelector('#shopping-form');
+let dashboard = document.querySelector('#dashboard');
+let cart = document.querySelector('#cart');
+let errorMessage = document.querySelector('#error-message');
 
-// Function to handle form validation
+// Form Validation
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  validateForm();
+});
+
 function validateForm() {
-  let isValid = true;
-  const formData = {
-    productName: document.getElementById('product-name').value,
-    productPrice: document.getElementById('product-price').value,
-    productQuantity: document.getElementById('product-quantity').value
-  };
-
-  if (!formData.productName || formData.productName.trim() === '') {
-    isValid = false;
-  }
-
-  if (!formData.productPrice || formData.productPrice.trim() === '') {
-    isValid = false;
-  }
-
-  if (!formData.productQuantity || formData.productQuantity.trim() === '') {
-    isValid = false;
-  }
-
-  if (isValid) {
-    updateDashboard(formData);
+  let valid = true;
+  let inputs = form.querySelectorAll('input');
+  inputs.forEach(input => {
+    if (!input.value.trim()) {
+      input.style.border = '2px solid red';
+      valid = false;
+    } else {
+      input.style.border = '';
+    }
+  });
+  if (!valid) {
+    errorMessage.style.display = 'block';
   } else {
-    alert('Please fill all fields');
+    errorMessage.style.display = 'none';
+    updateDashboard();
   }
 }
 
-// Function to handle button actions
-function handleButtonActions(e) {
-  e.preventDefault();
-  if (e.target.id === 'submit-btn') {
-    validateForm();
-  } else if (e.target.id === 'clear-btn') {
-    resetForm();
+// Button Actions
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  validateForm();
+  updateCart();
+});
+
+function updateCart() {
+  let inputs = form.querySelectorAll('input[type="number"]');
+  inputs.forEach(input => {
+    let value = parseInt(input.value);
+    input.closest('.item').querySelector('span').textContent = value;
+  });
+}
+
+// Dynamic Content Updates
+function updateDashboard() {
+  dashboard.innerHTML = '';
+  fetch('/api/dashboard').then(response => response.json()).then(data => {
+    data.forEach(item => {
+      dashboard.innerHTML += `
+        <div class="item">
+          <div>${item.name}</div>
+          <div>${item.quantity}</div>
+          <button class="decrease">-</button>
+          <button class="increase">+</button>
+        </div>
+      `;
+    });
+  });
+}
+
+// Error Handling
+form.addEventListener('invalid', function(event) {
+  event.preventDefault();
+  errorMessage.style.display = 'block';
+});
+
+// Dashboard Interactions
+dashboard.addEventListener('click', function(event) {
+  if (event.target.classList.contains('increase')) {
+    event.target.closest('.item').querySelector('span').textContent = parseInt(event.target.closest('.item').querySelector('span').textContent) + 1;
+  } else if (event.target.classList.contains('decrease')) {
+    event.target.closest('.item').querySelector('span').textContent = parseInt(event.target.closest('.item').querySelector('span').textContent) - 1;
   }
-}
+});
 
-// Function to update dashboard with form data
-function updateDashboard(formData) {
-  let dashboardItem = document.createElement('div');
-  dashboardItem.innerHTML = `
-    <p>Product Name: ${formData.productName}</p>
-    <p>Product Price: ${formData.productPrice}</p>
-    <p>Product Quantity: ${formData.productQuantity}</p>
-  `;
-  dashboard.appendChild(dashboardItem);
-}
-
-// Function to reset form
-function resetForm() {
-  form.reset();
-}
-
-// Event listeners
-form.addEventListener('submit', handleButtonActions);
-submitBtn.addEventListener('click', handleButtonActions);
-clearBtn.addEventListener('click', handleButtonActions);
+// Initial Dashboard Update
+updateDashboard();

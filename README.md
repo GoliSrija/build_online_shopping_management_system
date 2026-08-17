@@ -8,6 +8,7 @@ Frontend Technology:
 - HTML5
 - CSS3
 - JavaScript
+- Flask Templates
 
 Application Pages:
 - Login Page
@@ -127,27 +128,27 @@ Database Type:
 - PostgreSQL
 
 Main Tables:
-- Products
-- Orders
-- Customers
-- Analytics
-- Admins
+- User
+- Product
+- Order
+- Inventory
+- Admin
 
 Table Details:
 
-Table Name: Products
+Table Name: User
 
 Columns:
-- ProductID : SERIAL
-- ProductName : VARCHAR(255)
-- Description : TEXT
-- Price : DECIMAL
-- Stock : INTEGER
-- Category : VARCHAR(100)
-- ImageURL : VARCHAR(255)
+- userId SERIAL PRIMARY KEY
+- userName VARCHAR(100)
+- email VARCHAR(100)
+- password VARCHAR(100)
+- role VARCHAR(50)
+- createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 Primary Key:
-- ProductID
+- userId
 
 Foreign Keys:
 - None
@@ -156,11 +157,11 @@ Relationships:
 - None
 
 Indexes:
-- ProductID
+- userId_idx
 
 Constraints:
-- NOT NULL
-- UNIQUE (ProductName)
+- NOT NULL : userName, email, password, role
+- PRIMARY KEY : userId
 
 Normalization:
 - First Normal Form (1NF)
@@ -168,7 +169,133 @@ Normalization:
 - Third Normal Form (3NF)
 
 Security Considerations:
-- Data Encryption
-- User Authentication
-- Role-Based Access Control
-- Backup Strategy
+- Data Encryption: User passwords should be hashed before storing.
+- User Authentication: Use JWT tokens for session management.
+- Role-Based Access Control: Define roles and permissions for different users.
+- Backup Strategy: Implement regular database backups with a retention policy.
+
+Table Name: Product
+
+Columns:
+- productId SERIAL PRIMARY KEY
+- productName VARCHAR(255)
+- productDescription TEXT
+- price DECIMAL(10, 2)
+- categoryId INTEGER
+- inStock BOOLEAN DEFAULT TRUE
+- createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+Primary Key:
+- productId
+
+Foreign Keys:
+- categoryId: category_id
+
+Relationships:
+- Category: One-to-Many relationship with Category table
+
+Indexes:
+- productId_idx
+
+Constraints:
+- NOT NULL : productName, price, categoryId, inStock
+
+Normalization:
+- First Normal Form (1NF)
+- Second Normal Form (2NF)
+- Third Normal Form (3NF)
+
+Table Name: Order
+
+Columns:
+- orderId SERIAL PRIMARY KEY
+- userId INTEGER
+- productId INTEGER
+- quantity INTEGER
+- totalAmount DECIMAL(10, 2)
+- status VARCHAR(50)
+- orderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+Primary Key:
+- orderId
+
+Foreign Keys:
+- userId: user_id
+- productId: product_id
+
+Relationships:
+- User: Many-to-One relationship with User table
+- Product: Many-to-One relationship with Product table
+
+Indexes:
+- orderId_idx
+
+Constraints:
+- NOT NULL : userId, productId, quantity, totalAmount, status
+
+Normalization:
+- First Normal Form (1NF)
+- Second Normal Form (2NF)
+- Third Normal Form (3NF)
+
+Table Name: Inventory
+
+Columns:
+- inventoryId SERIAL PRIMARY KEY
+- productId INTEGER
+- quantity INTEGER
+- createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+Primary Key:
+- inventoryId
+
+Foreign Keys:
+- productId: product_id
+
+Relationships:
+- Product: One-to-Many relationship with Product table
+
+Indexes:
+- inventoryId_idx
+
+Constraints:
+- NOT NULL : productId, quantity
+
+Normalization:
+- First Normal Form (1NF)
+- Second Normal Form (2NF)
+- Third Normal Form (3NF)
+
+Table Name: Admin
+
+Columns:
+- adminId SERIAL PRIMARY KEY
+- adminName VARCHAR(100)
+- email VARCHAR(100)
+- password VARCHAR(100)
+- role VARCHAR(50)
+- createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+Primary Key:
+- adminId
+
+Foreign Keys:
+- None
+
+Relationships:
+- None
+
+Indexes:
+- adminId_idx
+
+Constraints:
+- NOT NULL : adminName, email, password, role
+
+Normalization:
+- First Normal Form (1NF)
+- Second Normal Form (2NF)
+- Third Normal Form (3NF)
