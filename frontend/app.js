@@ -1,49 +1,58 @@
-// HTML Elements
-const form = document.querySelector('form');
-const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('email');
-const quantityInput = document.getElementById('quantity');
-const dashboard = document.querySelector('#dashboard');
-
 // Form Validation
-form.addEventListener('submit', function(event) {
+document.getElementById('checkoutForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const quantity = quantityInput.value.trim();
-
-    // Name validation
-    if (!name) {
-        alert('Name is required');
-        return;
+    var isValid = true;
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zip', 'paymentMethod'];
+    requiredFields.forEach(field => {
+        const input = this.elements[field];
+        if (input.value.trim() === '') {
+            input.setCustomValidity('Please fill out this field.');
+            isValid = false;
+        } else {
+            input.setCustomValidity('');
+        }
+    });
+    if (isValid) {
+        alert('Form submitted successfully!');
+        // Simulate form submission logic
+        console.log('Form data:', this.elements);
     }
+});
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert('Invalid email address');
-        return;
+// Event Handling
+document.getElementById('toggleSidebar').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('hidden');
+});
+
+// Button Actions
+document.getElementById('updateDashboard').addEventListener('click', function() {
+    const content = document.getElementById('dashboardContent').innerText;
+    document.getElementById('dashboardContent').innerText = 'Content Updated!';
+});
+
+// Dynamic Content Updates
+document.getElementById('updateButton').addEventListener('click', function() {
+    const newContent = document.getElementById('newContent').value;
+    const updateDiv = document.getElementById('updateContent');
+    updateDiv.innerHTML = newContent;
+});
+
+// Error Handling
+document.getElementById('submitForm').addEventListener('click', function() {
+    try {
+        const error = new Error('An error occurred while processing the form.');
+        throw error;
+    } catch (err) {
+        console.error('Error:', err.message);
+        alert('An error occurred, please try again.');
     }
-
-    // Quantity validation
-    if (!quantity) {
-        alert('Quantity is required');
-        return;
-    }
-    quantityInput.value = parseInt(quantity);
-
-    // Success message
-    alert('Form submitted successfully!');
-    updateDashboard(name, email, quantity);
 });
 
 // Dashboard Interactions
-function updateDashboard(name, email, quantity) {
-    dashboard.innerHTML = `
-    <div>
-        <h2>Welcome, ${name}!</h2>
-        <p>Email: ${email}</p>
-        <p>Product Quantity: ${quantity}</p>
-    </div>
-    `;
-}
+document.getElementById('dashboardBtn').addEventListener('click', function() {
+    const dashboardInteract = function() {
+        alert('Dashboard Interacted!');
+    };
+    dashboardInteract();
+});

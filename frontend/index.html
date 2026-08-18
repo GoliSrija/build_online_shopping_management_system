@@ -4,47 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Shopping Management System</title>
-    <link rel="stylesheet" href="static/css/styles.css">
-    <script src="static/js/app.js" defer></script>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/app.js"></script>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#login">Login</a></li>
-                <li><a href="#register">Register</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">OSSMS</a>
+            <ul class="navbar-nav">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Orders</a></li>
+                <li><a href="#">Settings</a></li>
             </ul>
-        </nav>
-    </header>
-    
-    <section id="hero">
-        <h1>Welcome to Online Shopping Management System</h1>
-        <p>Streamline your online shopping experience.</p>
-        <button id="loginButton">Login</button>
-        <button id="registerButton">Register</button>
-    </section>
+        </div>
+    </nav>
 
-    <section id="dashboard-preview">
-        <div>
-            <h2>Dashboard Preview</h2>
-            <p>Here you can monitor your online store's performance.</p>
+    <header class="hero-section">
+        <div class="container">
+            <h1>Welcome to Online Shopping Management System</h1>
+            <p>Streamline your online shopping experience today.</p>
+        </div>
+    </header>
+
+    <section class="hero-action">
+        <div class="container">
+            <button class="hero-button">Login</button>
+            <button class="hero-button">Register</button>
         </div>
     </section>
 
-    <section id="footer">
-        <p>&copy; 2023 Online Shopping Management System. All rights reserved.</p>
+    <section class="dashboard-preview">
+        <div class="container">
+            <h2>Dashboard Preview</h2>
+            <p>Your dashboard will show real-time updates of your sales and inventory.</p>
+        </div>
     </section>
 
-    <script>
-        document.getElementById('loginButton').addEventListener('click', function() {
-            window.location.href = "login.html";
-        });
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Online Shopping Management System. All rights reserved.</p>
+        </div>
+    </footer>
 
-        document.getElementById('registerButton').addEventListener('click', function() {
-            window.location.href = "register.html";
+    <script>
+        // Placeholder for navigation logic
+        const navLinks = document.querySelectorAll('.navbar-nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const href = e.target.getAttribute('href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
         });
     </script>
 </body>
